@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_islamic_icons/flutter_islamic_icons.dart';
+import 'package:quran_app/screens/Azkar/list_of_azkars.dart';
 import 'package:quran_app/screens/Hadith/hadith_books_screen.dart';
 import 'package:quran_app/screens/Quran/surah_screen.dart';
-
 import '../utils/colors.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,10 +17,10 @@ class HomePage extends StatelessWidget {
           SliverAppBar(
             expandedHeight: 200,
             backgroundColor: darkBrown,
-            leading: Icon(
-              Icons.menu,
-              color: whiteColor,
-            ),
+            // leading: Icon(
+            //   Icons.menu,
+            //   color: whiteColor,
+            // ),
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: const Text(
@@ -83,7 +83,7 @@ class HomePage extends StatelessWidget {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(
-                top: 20.0,
+                top: 20,
                 left: 20,
                 right: 20,
               ),
@@ -136,28 +136,73 @@ class HomePage extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  color: darkBrown,
-                  height: 150,
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(
-                          FlutterIslamicIcons.prayingPerson,
-                          size: 60,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ListOfAzkar(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    color: darkBrown,
+                    height: 150,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(
+                            FlutterIslamicIcons.tasbih2,
+                            size: 60,
+                            color: whiteColor,
+                          ),
+                          Text(
+                            "الأذكار      ",
+                            style: TextStyle(
+                              color: whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 20.0,
+                left: 20,
+                right: 20,
+              ),
+              child: Container(
+                color: darkBrown,
+                height: 100,
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Share App",
+                        style: TextStyle(
+                          color: whiteColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.share,
                           color: whiteColor,
                         ),
-                        Text(
-                          "نماز جنازہ",
-                          style: TextStyle(
-                            color: whiteColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                          ),
-                        ),
-                      ],
-                    ),
+                        iconSize: 30,
+                      ),
+                    ],
                   ),
                 ),
               ),

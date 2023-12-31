@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+
+import '../../utils/colors.dart';
+import 'hadith_chapters_screen.dart';
 
 class HadithBookScreen extends StatefulWidget {
   const HadithBookScreen({super.key});
@@ -25,7 +29,8 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
       });
       rawData = jsonDecode(res.body);
       data = rawData["books"];
-      print(data);
+    } else {
+      Fluttertoast.showToast(msg: "Error Internet Required!");
     }
   }
 
@@ -38,62 +43,75 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[900],
+      backgroundColor: darkBrown,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
+        iconTheme: IconThemeData(color: whiteColor),
+        title: Text(
           "حدیث شریف",
           style: TextStyle(
-            color: Colors.white,
+            color: whiteColor,
             fontWeight: FontWeight.bold,
             fontSize: 30,
           ),
         ),
-        backgroundColor: Colors.brown[900],
+        backgroundColor: darkBrown,
       ),
       body: SafeArea(
         child: !isLoading
             ? ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
+                  var bookSlug = data[index]["bookSlug"];
                   return Card(
-                    color: Colors.brown[500],
-                    child: ListTile(
-                      leading: Text(
-                        "${index + 1}",
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      title: Text(
-                        data[index]["bookName"].toString(),
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 26),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Total Chapters: ${data[index]["chapters_count"].toString()}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
+                    color: lightBrown,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => HadithChapterScreen(bookSlug),
                           ),
-                          Text(
-                            "Total Hafdiths: ${data[index]["hadiths_count"].toString()}",
-                            style: const TextStyle(
-                              color: Colors.white,
+                        );
+                      },
+                      child: ListTile(
+                        leading: Text(
+                          "${index + 1}",
+                          style: TextStyle(
+                              color: whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        title: Text(
+                          data[index]["bookName"].toString(),
+                          style: TextStyle(
+                              color: whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 26),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Total Chapters: ${data[index]["chapters_count"].toString()}",
+                              style: TextStyle(
+                                color: whiteColor,
+                              ),
                             ),
-                          ),
-                        ],
+                            Text(
+                              "Total Hafdiths: ${data[index]["hadiths_count"].toString()}",
+                              style: TextStyle(
+                                color: whiteColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
                 })
-            : const Center(child: CircularProgressIndicator()),
+            : Center(
+                child: CircularProgressIndicator(
+                color: whiteColor,
+              )),
       ),
     );
   }

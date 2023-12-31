@@ -41,6 +41,13 @@ dependencies:
   just_audio_windows: ^0.2.0
   flutter_islamic_icons: ^1.0.2
   http: ^1.1.0
+  share_plus: ^7.2.1
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/Logo app.png"
 dev_dependencies:
   flutter_test:
     sdk: flutter

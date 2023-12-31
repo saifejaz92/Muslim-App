@@ -3,6 +3,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:quran/quran.dart' as quran;
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../utils/colors.dart';
+
 // ignore: must_be_immutable
 class SurahPage extends StatefulWidget {
   int surahIndex;
@@ -24,6 +26,12 @@ class _SurahPageState extends State<SurahPage> {
     super.dispose();
   }
 
+  void isPlay() async {
+    setState(() {
+      isplaying = false;
+    });
+  }
+
   Future<void> togglebutton() async {
     try {
       // ignore: await_only_futures
@@ -32,11 +40,12 @@ class _SurahPageState extends State<SurahPage> {
 
       if (isplaying) {
         await audioPlayer.play();
-
+        audioPlayer.play().whenComplete(isPlay);
         setState(() {
           playpauseButton = Icons.pause_circle_rounded;
           isplaying = false;
         });
+        // ignore: unrelated_type_equality_checks
       } else if (audioPlayer.pause() == true) {
         await audioPlayer.load();
       } else {
@@ -55,11 +64,12 @@ class _SurahPageState extends State<SurahPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          iconTheme: IconThemeData(color: whiteColor),
           title: Text(
             quran.getSurahName(widget.surahIndex + 1),
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: whiteColor),
           ),
-          backgroundColor: Colors.brown[900]),
+          backgroundColor: darkBrown),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -70,7 +80,7 @@ class _SurahPageState extends State<SurahPage> {
                   margin: const EdgeInsets.all(10),
                   shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.white)),
+                      borderSide: BorderSide(color: whiteColor!)),
                   child: ListView.builder(
                     itemCount: quran.getVerseCount(widget.surahIndex + 1),
                     itemBuilder: (context, index) {
@@ -78,7 +88,7 @@ class _SurahPageState extends State<SurahPage> {
                         margin: const EdgeInsets.all(10),
                         shape: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(color: Colors.white)),
+                            borderSide: BorderSide(color: whiteColor!)),
                         child: ListTile(
                           title: Text(
                             quran.getVerse(widget.surahIndex + 1, index + 1,
@@ -87,11 +97,21 @@ class _SurahPageState extends State<SurahPage> {
                             style: TextStyle(
                                 fontSize: 20, color: Colors.brown[600]),
                           ),
+                          subtitle: Column(
+                            children: [
+                              const Divider(),
+                              Text(
+                                quran.getVerseTranslation(
+                                    widget.surahIndex + 1, index + 1),
+                                style: const TextStyle(fontSize: 15),
+                              ),
+                            ],
+                          ),
                           leading: CircleAvatar(
-                            backgroundColor: Colors.brown[900],
+                            backgroundColor: darkBrown,
                             child: Text("${index + 1}",
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color: whiteColor,
                                 )),
                           ),
                         ),
@@ -102,19 +122,19 @@ class _SurahPageState extends State<SurahPage> {
               ),
               Card(
                 elevation: 6,
-                shadowColor: Colors.brown[900],
+                shadowColor: darkBrown,
                 child: Center(
                   child: IconButton(
                       icon: !isLoading
                           ? Icon(
                               playpauseButton,
-                              color: Colors.brown[900],
+                              color: darkBrown,
                             )
                           : SizedBox(
                               height: 30,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2.0,
-                                color: Colors.brown[900],
+                                color: darkBrown,
                               ),
                             ),
                       onPressed: () async {

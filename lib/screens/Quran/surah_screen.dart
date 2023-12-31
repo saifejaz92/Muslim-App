@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quran/quran.dart' as quran;
-
+import '../../utils/colors.dart';
 import 'surah_page.dart';
 
 class SurahScreen extends StatefulWidget {
@@ -15,9 +15,13 @@ class _SurahScreenState extends State<SurahScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: whiteColor),
         centerTitle: true,
-        backgroundColor: Colors.brown[900],
-        title: const Text("قرآن کریم"),
+        backgroundColor: darkBrown,
+        title: Text(
+          "قرآن کریم",
+          style: TextStyle(color: whiteColor),
+        ),
       ),
       body: ListView.builder(
           itemCount: quran.totalSurahCount,
@@ -40,16 +44,16 @@ class _SurahScreenState extends State<SurahScreen> {
                     subtitle: Text(
                         "Surah Name(English): ${quran.getSurahNameEnglish(index + 1)}"),
                     leading: CircleAvatar(
-                      backgroundColor: Colors.brown[900],
+                      backgroundColor: darkBrown,
                       child: Text(
                         "${index + 1}",
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: whiteColor),
                       ),
                     ),
                     trailing: Text(
                       "${quran.getVerseCount(index + 1)}",
                       style: TextStyle(
-                        color: Colors.brown[900],
+                        color: darkBrown,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
