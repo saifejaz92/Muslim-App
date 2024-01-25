@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:quran_app/utils/ads.dart';
 
 import '../../utils/colors.dart';
 import 'hadith_chapters_screen.dart';
@@ -112,6 +113,10 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
                 child: CircularProgressIndicator(
                 color: whiteColor,
               )),
+      ),
+      bottomNavigationBar: const SizedBox(
+        height: 50,
+        child: AdsScreen(),
       ),
     );
   }

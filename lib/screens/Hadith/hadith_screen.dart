@@ -67,7 +67,7 @@ class _HadithScreenState extends State<HadithScreen> {
                           trailing: Text("Status :" +
                               dataList[index]["status"].toString())),
                       Card(
-                        color: Color(0XFFF2F2F2),
+                        color: const Color(0XFFF2F2F2),
                         child: SizedBox(
                           width: double.infinity,
                           child: Padding(

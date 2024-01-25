@@ -3,10 +3,19 @@ import 'package:flutter_islamic_icons/flutter_islamic_icons.dart';
 import 'package:quran_app/screens/Azkar/list_of_azkars.dart';
 import 'package:quran_app/screens/Hadith/hadith_books_screen.dart';
 import 'package:quran_app/screens/Quran/surah_screen.dart';
+import 'package:quran_app/utils/ads.dart';
 import '../utils/colors.dart';
+import 'package:share_plus/share_plus.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool isloading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +25,6 @@ class HomePage extends StatelessWidget {
         slivers: [
           SliverAppBar(
             expandedHeight: 200,
-            backgroundColor: darkBrown,
             // leading: Icon(
             //   Icons.menu,
             //   color: whiteColor,
@@ -46,7 +54,7 @@ class HomePage extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const SurahScreen(),
+                        builder: (context) => SurahScreen(),
                       ),
                     );
                   },
@@ -179,30 +187,36 @@ class HomePage extends StatelessWidget {
                 left: 20,
                 right: 20,
               ),
-              child: Container(
-                color: darkBrown,
-                height: 100,
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        "Share App",
-                        style: TextStyle(
-                          color: whiteColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
+              child: GestureDetector(
+                onTap: () {
+                  var myUrl = "https://github.com/saifejaz92";
+                  Share.share("Hey This is my app\n${myUrl}");
+                },
+                child: Container(
+                  color: darkBrown,
+                  height: 100,
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Share App",
+                          style: TextStyle(
+                            color: whiteColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.share,
-                          color: whiteColor,
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.share,
+                            color: whiteColor,
+                          ),
+                          iconSize: 30,
                         ),
-                        iconSize: 30,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -210,6 +224,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: const SizedBox(height: 50, child: AdsScreen()),
     );
   }
 }
